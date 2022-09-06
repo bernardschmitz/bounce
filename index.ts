@@ -16,6 +16,15 @@ async function main(): Promise<void> {
     makeCube();
     makeGround();
 
+    // const physicsViewer = new PhysicsViewer(scene);
+
+    // scene.meshes.forEach(mesh => {
+    //     console.log(mesh);
+    //     if (mesh.physicsImpostor) {
+    //         physicsViewer.showImpostor(mesh.physicsImpostor, mesh as Mesh);
+    //     }
+    // });
+
     engine.runRenderLoop(() => scene.render());
 }
 

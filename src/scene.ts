@@ -1,6 +1,5 @@
 
-// import * as B from 'babylonjs';
-import { ArcRotateCamera, Color4, Engine, HemisphericLight, Scene, Vector3 } from 'babylonjs';
+import { ArcRotateCamera, Color4, DirectionalLight, Engine, HemisphericLight, Scene, ShadowGenerator, Vector3 } from 'babylonjs';
 import { canvas } from './domItems';
 
 export const engine = new Engine(canvas, true);
@@ -28,7 +27,18 @@ function createCamera(scene: Scene): void  {
 
 function createLight(scene: Scene): void {
 
-    new HemisphericLight("Light", new Vector3(1, 1, 0), scene);
+    const light = new HemisphericLight("Light", new Vector3(1, 1, 0), scene);
+    light.intensity = 0.1;
+
+    const pos = new Vector3(-10, 50, 50);
+    const dir = new DirectionalLight("dir", Vector3.Zero().subtract(pos), scene);
+    dir.position = pos;
+    dir.intensity = 0.7;
+
+    const shadowGenerator = new ShadowGenerator(1024, dir);   
+    shadowGenerator.useBlurExponentialShadowMap = true;
+    shadowGenerator.useKernelBlur = true;
+    shadowGenerator.blurKernel = 64;
 }
 
 function setBackground(scene: Scene): void {
