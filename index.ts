@@ -4,16 +4,17 @@ import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
 import { AmmoJSPlugin, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
-import { makeCube } from './src/cube';
+import { makeCube, makeTorus } from './src/cube';
 
 
 async function main(): Promise<void> {
-    
+     
     const ammo = await Ammo();
     const physics = new AmmoJSPlugin(true, ammo);
     
     scene.enablePhysics(new Vector3(0, -9.81, 0), physics);
     makeCube();
+    makeTorus();
     makeGround();
 
     // const physicsViewer = new PhysicsViewer(scene);

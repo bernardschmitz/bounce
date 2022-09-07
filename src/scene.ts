@@ -22,7 +22,8 @@ function createCamera(scene: Scene): void  {
     const radius = 8.0;
     const target = new Vector3(0.0, 0.0, 0.0);
 
-    new ArcRotateCamera("Camera", alpha, beta, radius, target, scene).attachControl(canvas, true);
+    const camera = new ArcRotateCamera("Camera", alpha, beta, radius, target, scene);
+    camera.attachControl(canvas, true);
 }
 
 function createLight(scene: Scene): void {
