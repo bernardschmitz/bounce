@@ -68,3 +68,26 @@ export function makeBalls(): void {
         balls.push(ball);
     }
 }
+
+export function makeCubes(): void {
+
+    const N = 10;
+
+    const shadowGenerator = scene.getLightByName("spot")?.getShadowGenerator() as ShadowGenerator;
+
+    const ballMaterial = new StandardMaterial("yellow", scene);
+    ballMaterial.diffuseColor = Color3.Yellow();
+
+    const balls: Mesh[] = [];
+    for(var i=0; i<N; i++) {
+        const ball = MeshBuilder.CreateBox("box"+i, { size: 0.7 });
+        ball.position.y = 7;
+        ball.position.z = -7 + i;
+        ball.material = ballMaterial;
+
+        ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.BoxImpostor, { mass: 2, restitution: 0.5 }, scene);
+        shadowGenerator.addShadowCaster(ball);
+        // ball.receiveShadows = true;
+        balls.push(ball);
+    }
+}

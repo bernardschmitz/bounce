@@ -10,7 +10,7 @@ export function makeGround(): Mesh {
 
     const groundMaterial = new StandardMaterial("brown", scene);
     groundMaterial.diffuseColor = new Color3(0.5, 0.2, 0.1);
-    ground.material = groundMaterial;
+    // ground.material = groundMaterial;
 
     ground.receiveShadows = true;
 

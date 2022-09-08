@@ -4,7 +4,7 @@ import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
 import { AmmoJSPlugin, Mesh, ShadowGenerator, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
-import { makeBalls, makeCube, makeTorus } from './src/cube';
+import { makeBalls, makeCube, makeCubes, makeTorus } from './src/cube';
 import { canvas } from './src/domItems';
 
 
@@ -13,11 +13,16 @@ async function main(): Promise<void> {
     const ammo = await Ammo();
     const physics = new AmmoJSPlugin(true, ammo);
     
-    scene.enablePhysics(new Vector3(0, -9.81, 0), physics);
+    scene.enablePhysics(new Vector3(0, -9.81/1.5, 0), physics);
     makeCube();
     makeTorus();
     makeBalls();
+    setTimeout(() => makeCubes(), 1000);
+    // makeCubes();
     makeGround();
+
+    setInterval(() => makeBalls(), 5000);
+    setInterval(() => makeCubes(), 10000);
 
     // const physicsViewer = new PhysicsViewer(scene);
 

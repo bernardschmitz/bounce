@@ -52,13 +52,13 @@ function createCamera(scene: Scene): void  {
 function createLight(scene: Scene): void {
 
     const light = new HemisphericLight("Light", new Vector3(1, 1, 0), scene);
-    light.intensity = 0.1;
+    light.intensity = 0.25;
 
     const pos = new Vector3(-10, 15, 15).scale(0.5);
     // const dir = new DirectionalLight("spot", Vector3.Zero().subtract(pos), scene);
     const dir = new SpotLight("spot", pos, Vector3.Zero().subtract(pos), Math.PI/2, 10, scene);
     dir.position = pos;
-    dir.intensity = 0.8;
+    dir.intensity = 0.75;
     dir.shadowEnabled = true;
     // dir.shadowMinZ = 1;
     // dir.shadowMaxZ = 50;
@@ -68,6 +68,9 @@ function createLight(scene: Scene): void {
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.useKernelBlur = true;
     shadowGenerator.blurKernel = 16;
+    // shadowGenerator.useBlurCloseExponentialShadowMap = true;
+    // shadowGenerator.enableSoftTransparentShadow = true;
+    shadowGenerator.darkness = 0.25;
 }
 
 function setBackground(scene: Scene): void {
