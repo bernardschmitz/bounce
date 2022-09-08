@@ -1,5 +1,5 @@
 
-import { Animation, ArcRotateCamera, CircleEase, Color4, CubicEase, DirectionalLight, EasingFunction, Engine, HemisphericLight, Scene, ShadowGenerator, Vector3 } from 'babylonjs';
+import { Animation, ArcRotateCamera, CircleEase, Color4, CubicEase, DirectionalLight, EasingFunction, Engine, HemisphericLight, Scene, ShadowGenerator, SpotLight, Vector3 } from 'babylonjs';
 import { canvas } from './domItems';
 
 export const engine = new Engine(canvas, true);
@@ -54,15 +54,20 @@ function createLight(scene: Scene): void {
     const light = new HemisphericLight("Light", new Vector3(1, 1, 0), scene);
     light.intensity = 0.1;
 
-    const pos = new Vector3(-10, 50, 50);
-    const dir = new DirectionalLight("dir", Vector3.Zero().subtract(pos), scene);
+    const pos = new Vector3(-10, 15, 15).scale(0.5);
+    // const dir = new DirectionalLight("spot", Vector3.Zero().subtract(pos), scene);
+    const dir = new SpotLight("spot", pos, Vector3.Zero().subtract(pos), Math.PI/2, 10, scene);
     dir.position = pos;
-    dir.intensity = 0.7;
+    dir.intensity = 0.8;
+    dir.shadowEnabled = true;
+    // dir.shadowMinZ = 1;
+    // dir.shadowMaxZ = 50;
 
-    const shadowGenerator = new ShadowGenerator(1024, dir);   
+
+    const shadowGenerator = new ShadowGenerator(2048, dir);
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.useKernelBlur = true;
-    shadowGenerator.blurKernel = 64;
+    shadowGenerator.blurKernel = 16;
 }
 
 function setBackground(scene: Scene): void {

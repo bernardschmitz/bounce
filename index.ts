@@ -2,9 +2,9 @@
 import 'regenerator-runtime/runtime';
 import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
-import { AmmoJSPlugin, Vector3 } from 'babylonjs';
+import { AmmoJSPlugin, Mesh, ShadowGenerator, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
-import { makeCube, makeTorus } from './src/cube';
+import { makeBalls, makeCube, makeTorus } from './src/cube';
 import { canvas } from './src/domItems';
 
 
@@ -16,6 +16,7 @@ async function main(): Promise<void> {
     scene.enablePhysics(new Vector3(0, -9.81, 0), physics);
     makeCube();
     makeTorus();
+    makeBalls();
     makeGround();
 
     // const physicsViewer = new PhysicsViewer(scene);
@@ -45,6 +46,18 @@ async function main(): Promise<void> {
 
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    scene.onAfterRenderObservable.add(() => {
+
+        for(var b:Mesh of scene.meshes) {
+            if(b.position.y < -1) {
+                // console.log('dispose {}', b.name);
+                scene.getLightByName
+                scene.getLightByName("dir")?.getShadowGenerator()?.removeShadowCaster(b);
+                scene.removeMesh(b);
+                b.dispose();
+            }
+    });
 
     engine.runRenderLoop(() => {
 
