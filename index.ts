@@ -19,7 +19,7 @@ async function main(): Promise<void> {
     makeBalls();
     setTimeout(() => makeCubes(), 1000);
     // makeCubes();
-    makeGround();
+    const ground = makeGround();
 
     setInterval(() => makeBalls(), 5000);
     setInterval(() => makeCubes(), 10000);
@@ -63,6 +63,39 @@ async function main(): Promise<void> {
                 b.dispose();
             }
     });
+
+
+    const sphere = scene.getMeshByName("torus1");
+    if(sphere != null) {
+        sphere?.physicsImpostor.registerOnPhysicsCollide(ground.physicsImpostor, function(main, collided) {
+            // main.object.material.diffuseColor = new BABYLON.Color3(Math.random(), Math.random(), Math.random());
+
+            // console.log(main.object.physicsImpostor.getLinearVelocity());
+            
+            if(main.object.physicsImpostor.getLinearVelocity().lengthSquared() >= 16) {
+                const p = new BABYLON.ParticleSystem("particles", 10, scene);
+                p.emitter = main.object.position;
+                p.createPointEmitter(new BABYLON.Vector3(-7, 1, 7), new BABYLON.Vector3(7, 1, -7));
+                p.disposeOnStop = true;
+                p.particleTexture = new BABYLON.Texture("textures/flare.png", scene);
+                p.minEmitPower = 5;
+                p.maxEmitPower = 8;
+                p.minSize = 0.1;
+                p.maxSize = 0.4;
+                p.minLifeTime = 0.3;
+                p.maxLifeTime = 1.0;
+                p.color1 = new BABYLON.Color4(0.97, 0.68, 0.64);
+                p.color2 = new BABYLON.Color4(1, 0.2, 0.2);
+                p.colorDead = new BABYLON.Color4(0, 0, 0.2, 0.0);
+
+                p.gravity = new BABYLON.Vector3(0, -9.81, 0);
+                
+                p.emitRate = 10000;
+                p.start();
+                setTimeout(()=>p.stop(), 50);
+            }
+        });
+    }
 
     engine.runRenderLoop(() => {
 

@@ -6,7 +6,7 @@ export function makeGround(): Mesh {
     
     const size = 10;
     const ground = MeshBuilder.CreateGround("Ground", { width: size, height: size}, scene);
-    ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.9 }, scene);
+    ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.BoxImpostor, { mass: 0, restitution: 0.3, friction: 0.3 }, scene);
 
     const groundMaterial = new StandardMaterial("brown", scene);
     groundMaterial.diffuseColor = new Color3(0.5, 0.2, 0.1);

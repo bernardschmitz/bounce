@@ -64,12 +64,10 @@ function createLight(scene: Scene): void {
     // dir.shadowMaxZ = 50;
 
 
-    const shadowGenerator = new ShadowGenerator(2048, dir);
+    const shadowGenerator = new ShadowGenerator(1024, dir);
     shadowGenerator.useBlurExponentialShadowMap = true;
     shadowGenerator.useKernelBlur = true;
-    shadowGenerator.blurKernel = 16;
-    // shadowGenerator.useBlurCloseExponentialShadowMap = true;
-    // shadowGenerator.enableSoftTransparentShadow = true;
+    shadowGenerator.blurKernel = 8;
     shadowGenerator.darkness = 0.25;
 }
 
