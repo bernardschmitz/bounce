@@ -2,9 +2,9 @@
 import 'regenerator-runtime/runtime';
 import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
-import { AmmoJSPlugin, Mesh, ShadowGenerator, Vector3 } from 'babylonjs';
+import { AmmoJSPlugin, Mesh, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
-import { makeBalls, makeCube, makeCubes, makeTorus } from './src/cube';
+import { makeBalls, makeCube, makeCubes, makeSPS, makeTorus } from './src/cube';
 import { canvas } from './src/domItems';
 
 
@@ -20,6 +20,8 @@ async function main(): Promise<void> {
     setTimeout(() => makeCubes(), 1000);
     // makeCubes();
     makeGround();
+
+    makeSPS();
 
     setInterval(() => makeBalls(), 5000);
     setInterval(() => makeCubes(), 10000);

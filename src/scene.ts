@@ -52,7 +52,7 @@ function createCamera(scene: Scene): void  {
 function createLight(scene: Scene): void {
 
     const light = new HemisphericLight("Light", new Vector3(1, 1, 0), scene);
-    light.intensity = 0.25;
+    light.intensity = 0.5;
 
     const pos = new Vector3(-10, 15, 15).scale(0.5);
     // const dir = new DirectionalLight("spot", Vector3.Zero().subtract(pos), scene);
@@ -74,5 +74,5 @@ function createLight(scene: Scene): void {
 }
 
 function setBackground(scene: Scene): void {
-    scene.clearColor = new Color4(0, 0, 0, 1);
+    scene.clearColor = new Color4(0.4, 0.4, 0.4, 1);
 }

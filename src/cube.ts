@@ -1,5 +1,5 @@
 
-import { Color3, Light, Mesh, MeshBuilder, PhysicsImpostor, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
+import { Color3, Color4, Light, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, SolidParticleSystem, StandardMaterial, Vector3 } from "babylonjs";
 import { scene } from "./scene";
 
 export function makeCube(): Mesh {
@@ -58,8 +58,9 @@ export function makeBalls(): void {
     const balls: Mesh[] = [];
     for(var i=0; i<N; i++) {
         const ball = MeshBuilder.CreateSphere("ball"+i, { diameter: 0.5, segments: 10 });
-        ball.position.x = -5 + i;
-        ball.position.y = 5;
+        ball.position.x = Scalar.RandomRange(-10, 10);
+        ball.position.y = Scalar.RandomRange(5, 10);
+        ball.position.z = Scalar.RandomRange(-10, 10);
         ball.material = ballMaterial;
 
         ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
@@ -81,13 +82,50 @@ export function makeCubes(): void {
     const balls: Mesh[] = [];
     for(var i=0; i<N; i++) {
         const ball = MeshBuilder.CreateBox("box"+i, { size: 0.7 });
-        ball.position.y = 7;
-        ball.position.z = -7 + i;
+
+        ball.position.x = Scalar.RandomRange(-10, 10);
+        ball.position.y = Scalar.RandomRange(5, 10);
+        ball.position.z = Scalar.RandomRange(-10, 10);
+
         ball.material = ballMaterial;
+
+        ball.edgesColor = new Color4(0.0, 0.0, 0.0, 1.0);
+        ball.enableEdgesRendering();
 
         ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.BoxImpostor, { mass: 2, restitution: 0.5 }, scene);
         shadowGenerator.addShadowCaster(ball);
         // ball.receiveShadows = true;
         balls.push(ball);
     }
+}
+
+export function makeSPS(): void {
+
+    const SPS = new SolidParticleSystem("SPS", scene);
+    const poly = MeshBuilder.CreatePolyhedron("p", { type: 2, size: 0.5 }, scene);
+    poly.edgesColor = new Color4(0.0, 0.0, 0.0, 1.0);
+    // poly.edgesShareWithInstances = true;
+    poly.enableEdgesRendering();
+    SPS.addShape(poly, 100);
+    poly.dispose();
+
+    const mesh = SPS.buildMesh();
+
+    SPS.initParticles = () => {
+        for(let i=0; i<SPS.nbParticles; i++) {
+            const p = SPS.particles[i];
+            p.position.x = Scalar.RandomRange(-10, 10);
+            p.position.y = Scalar.RandomRange(0, 10);
+            p.position.z = Scalar.RandomRange(-10, 10);
+            p.color = new Color4(Math.random()*0.5+0.5, Math.random()*0.5+0.5, Math.random()*0.5+0.5, 1.0);
+        }
+    }
+
+    SPS.initParticles();
+    SPS.setParticles();
+
+    mesh.edgesColor = new Color4(0.0, 0.0, 0.0, 1.0);
+    // mesh.edgesShareWithInstances = true;
+    mesh.enableEdgesRendering();
+
 }
