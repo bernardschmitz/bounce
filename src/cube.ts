@@ -74,7 +74,7 @@ export function makeBalls(): void {
 
 export function makeCubes(): void {
 
-    const N = 10;
+    const N = 100;
 
     const shadowGenerator = scene.getLightByName("spot")?.getShadowGenerator() as ShadowGenerator;
 
@@ -117,5 +117,29 @@ export function makeCubes(): void {
         shadowGenerator.addShadowCaster(ball);
         // ball.receiveShadows = true;
         balls.push(ball);
+
+    // const fade = new FadeInOutBehavior();
+    // fade.delay = 1000;
+    // fade.fadeInTime = 500;
+    // fade.attach(ground);
+    // fade.init();
+    // fade.fadeIn(true);
+
+    // let doFadeIn = false;
+    // setInterval(() => {
+    //     if(doFadeIn) {
+    //         setTimeout(()=>{ 
+    //             ground.physicsImpostor?.dispose();
+    //         }, fade.delay+fade.fadeInTime/2);
+    //     }
+    //     else {
+    //         setTimeout(()=>{
+    //             ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.MeshImpostor, { mass: 0, restitution: 0.1, friction: 0.75 }, scene);
+    //         }, fade.delay+fade.fadeInTime/2);
+    //     }
+    //     fade.fadeIn(doFadeIn);
+    //     doFadeIn = !doFadeIn;
+    // }, 10000);
+
     }
 }

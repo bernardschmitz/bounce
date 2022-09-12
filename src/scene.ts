@@ -19,7 +19,7 @@ function makeScene(): Scene {
     // scene.fogStart = 20.0;
     // scene.fogEnd = 40.0;
     scene.fogMode = Scene.FOGMODE_EXP2;
-    scene.fogDensity = 0.03;
+    scene.fogDensity = 0.01;
     
 
     return scene;

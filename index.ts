@@ -52,14 +52,15 @@ async function main(): Promise<void> {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const notMoving:{[key: string]: number} = {};
+    // const notMoving:{[key: string]: number} = {};
 
     scene.onAfterRenderObservable.add(() => {
 
         for(var b:Mesh of scene.meshes) {
-            if(b.name == "Ground") {
+            if(b.name.startsWith("Ground")) {
                 continue;
             }
+
             if(b.position.y < -25) {
                 // console.log('dispose {}', b.name);
                 // scene.getLightByName
