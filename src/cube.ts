@@ -1,5 +1,5 @@
 
-import { Color3, Light, Mesh, MeshBuilder, PhysicsImpostor, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
+import { Color3, Color4, Light, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
 import { scene } from "./scene";
 
 export function makeCube(): Mesh {
@@ -58,8 +58,11 @@ export function makeBalls(): void {
     const balls: Mesh[] = [];
     for(var i=0; i<N; i++) {
         const ball = MeshBuilder.CreateSphere("ball"+i, { diameter: 0.5, segments: 10 });
-        ball.position.x = -5 + i;
-        ball.position.y = 5;
+ 
+        ball.position.x = Scalar.RandomRange(-10, 10);
+        ball.position.y = Scalar.RandomRange(5, 10);
+        ball.position.z = Scalar.RandomRange(-10, 10);
+
         ball.material = ballMaterial;
 
         ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.SphereImpostor, { mass: 1, restitution: 0.9 }, scene);
@@ -75,17 +78,42 @@ export function makeCubes(): void {
 
     const shadowGenerator = scene.getLightByName("spot")?.getShadowGenerator() as ShadowGenerator;
 
-    const ballMaterial = new StandardMaterial("yellow", scene);
-    ballMaterial.diffuseColor = Color3.Yellow();
+    const K = 100;
+    const mats: Material[] = [];
+    for(let i=0; i<K; i++) {
+        const mat = new StandardMaterial("mat"+i, scene);
+        mat.diffuseColor = new Color3(Scalar.RandomRange(0.25, 1.0), Scalar.RandomRange(0.25, 1.0), Scalar.RandomRange(0.25, 1.0));
+
+        if(Math.random() > 0.75) {
+            mat.diffuseColor.r *= 1.5;
+        }
+        else if(Math.random() > 0.75) {
+            mat.diffuseColor.g *= 1.5;
+        }
+        else if(Math.random() > 0.75) {
+            mat.diffuseColor.b *= 1.5;
+        }
+
+        mat.diffuseColor.clampToRef(0, 1, mat.diffuseColor);
+
+        mats.push(mat);
+    }
 
     const balls: Mesh[] = [];
     for(var i=0; i<N; i++) {
-        const ball = MeshBuilder.CreateBox("box"+i, { size: 0.7 });
-        ball.position.y = 7;
-        ball.position.z = -7 + i;
-        ball.material = ballMaterial;
+        // const ball = MeshBuilder.CreateBox("box"+i, { size: 0.7 });
+        const ball = MeshBuilder.CreatePolyhedron("box"+i, { type: Math.trunc(Scalar.RandomRange(1,15)), size: 0.35 });
 
-        ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.BoxImpostor, { mass: 2, restitution: 0.5 }, scene);
+        ball.position.x = Scalar.RandomRange(-20, 20);
+        ball.position.y = Scalar.RandomRange(25, 35);
+        ball.position.z = Scalar.RandomRange(-20, 20);
+
+        ball.material = mats[Math.trunc(Math.random()*K)];
+
+        // ball.edgesColor = new Color4(0, 0, 0, 1);
+        // ball.enableEdgesRendering();
+
+        ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.MeshImpostor, { mass: 2, friction: 0.7, restitution: 0.1 }, scene);
         shadowGenerator.addShadowCaster(ball);
         // ball.receiveShadows = true;
         balls.push(ball);

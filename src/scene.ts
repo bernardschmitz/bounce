@@ -1,5 +1,5 @@
 
-import { Animation, ArcRotateCamera, CircleEase, Color4, CubicEase, DirectionalLight, EasingFunction, Engine, HemisphericLight, Scene, ShadowGenerator, SpotLight, Vector3 } from 'babylonjs';
+import { Animation, ArcRotateCamera, CircleEase, Color3, Color4, CubicEase, DirectionalLight, EasingFunction, Engine, HemisphericLight, Scene, ShadowGenerator, SpotLight, Vector3 } from 'babylonjs';
 import { canvas } from './domItems';
 
 export const engine = new Engine(canvas, true);
@@ -10,7 +10,17 @@ function makeScene(): Scene {
 
     createCamera(scene);
     createLight(scene);
-    setBackground(scene);
+
+    scene.ambientColor = new Color3(0.4, 0.4, 0.4);
+    scene.clearColor = new Color4(0.4, 0.4, 0.4, 1);
+
+    scene.fogColor = new Color3(0.4, 0.4, 0.4);
+    // scene.fogMode = Scene.FOGMODE_LINEAR;
+    // scene.fogStart = 20.0;
+    // scene.fogEnd = 40.0;
+    scene.fogMode = Scene.FOGMODE_EXP2;
+    scene.fogDensity = 0.03;
+    
 
     return scene;
 }
@@ -19,7 +29,7 @@ function createCamera(scene: Scene): void  {
 
     const alpha = Math.PI / 4.0;
     const beta = Math.PI / 3.0;
-    const radius = 10.0;
+    const radius = 20.0;
     const target = new Vector3(0.0, 0.0, 0.0);
 
     const camera = new ArcRotateCamera("Camera", alpha, beta, radius, target, scene);
@@ -45,8 +55,8 @@ function createCamera(scene: Scene): void  {
     ease.setEasingMode(EasingFunction.EASINGMODE_EASEINOUT);
     animateBeta.setEasingFunction(ease);
 
-    camera.animations = [ animateAlpha, animateBeta ];
-    scene.beginAnimation(camera, 0, seconds, true, 1);
+    // camera.animations = [ animateAlpha, animateBeta ];
+    // scene.beginAnimation(camera, 0, seconds, true, 1);
 }
 
 function createLight(scene: Scene): void {
@@ -60,19 +70,15 @@ function createLight(scene: Scene): void {
     dir.position = pos;
     dir.intensity = 0.75;
     dir.shadowEnabled = true;
-    // dir.shadowMinZ = 1;
-    // dir.shadowMaxZ = 50;
+    dir.shadowMinZ = 1;
+    dir.shadowMaxZ = 50;
 
 
     const shadowGenerator = new ShadowGenerator(2048, dir);
-    shadowGenerator.useBlurExponentialShadowMap = true;
-    shadowGenerator.useKernelBlur = true;
-    shadowGenerator.blurKernel = 16;
+    // shadowGenerator.useBlurExponentialShadowMap = true;
+    // shadowGenerator.useKernelBlur = true;
+    // shadowGenerator.blurKernel = 16;
     // shadowGenerator.useBlurCloseExponentialShadowMap = true;
     // shadowGenerator.enableSoftTransparentShadow = true;
     shadowGenerator.darkness = 0.25;
-}
-
-function setBackground(scene: Scene): void {
-    scene.clearColor = new Color4(0, 0, 0, 1);
 }

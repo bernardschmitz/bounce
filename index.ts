@@ -14,15 +14,15 @@ async function main(): Promise<void> {
     const physics = new AmmoJSPlugin(true, ammo);
     
     scene.enablePhysics(new Vector3(0, -9.81/1.5, 0), physics);
-    makeCube();
-    makeTorus();
-    makeBalls();
-    setTimeout(() => makeCubes(), 1000);
-    // makeCubes();
+    // makeCube();
+    // makeTorus();
+    // makeBalls();
+    // setTimeout(() => makeCubes(), 1000);
+    makeCubes();
     makeGround();
 
-    setInterval(() => makeBalls(), 5000);
-    setInterval(() => makeCubes(), 10000);
+    // setInterval(() => makeBalls(), 5000);
+    setInterval(() => makeCubes(), 5000);
 
     // const physicsViewer = new PhysicsViewer(scene);
 
@@ -52,16 +52,40 @@ async function main(): Promise<void> {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const notMoving:{[key: string]: number} = {};
+
     scene.onAfterRenderObservable.add(() => {
 
         for(var b:Mesh of scene.meshes) {
-            if(b.position.y < -1) {
+            if(b.name == "Ground") {
+                continue;
+            }
+            if(b.position.y < -25) {
                 // console.log('dispose {}', b.name);
-                scene.getLightByName
-                scene.getLightByName("dir")?.getShadowGenerator()?.removeShadowCaster(b);
+                // scene.getLightByName
+                scene.getLightByName("spot")?.getShadowGenerator()?.removeShadowCaster(b);
                 scene.removeMesh(b);
+                b.physicsImpostor?.dispose();
                 b.dispose();
             }
+            // else {
+            //     const av = b.physicsImpostor?.getLinearVelocity();
+            //     if(av != null && av.lengthSquared() < 0.001) {
+            //         let k = notMoving[b.id] || 0;
+            //         k++;
+            //         notMoving[b.id] = k;
+            //     }
+            //     else {
+            //         delete notMoving[b.id];
+            //     }
+            //     if(notMoving[b.id] > 120) {
+            //         delete notMoving[b.id];
+            //         scene.removeMesh(b);
+            //         b.physicsImpostor?.dispose();
+            //         b.dispose();
+            //     }
+            // }
+
     });
 
     engine.runRenderLoop(() => {
