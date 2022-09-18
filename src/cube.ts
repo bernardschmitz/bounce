@@ -74,7 +74,7 @@ export function makeBalls(): void {
 
 export function makeCubes(): void {
 
-    const N = 100;
+    const N = 10;
 
     const shadowGenerator = scene.getLightByName("spot")?.getShadowGenerator() as ShadowGenerator;
 

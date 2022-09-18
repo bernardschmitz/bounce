@@ -64,14 +64,14 @@ function createLight(scene: Scene): void {
     const light = new HemisphericLight("Light", new Vector3(1, 1, 0), scene);
     light.intensity = 0.25;
 
-    const pos = new Vector3(-10, 15, 15).scale(0.5);
+    const pos = new Vector3(-10, 35, 15).scale(0.5);
     // const dir = new DirectionalLight("spot", Vector3.Zero().subtract(pos), scene);
     const dir = new SpotLight("spot", pos, Vector3.Zero().subtract(pos), Math.PI/2, 10, scene);
     dir.position = pos;
     dir.intensity = 0.75;
     dir.shadowEnabled = true;
-    dir.shadowMinZ = 1;
-    dir.shadowMaxZ = 50;
+    // dir.shadowMinZ = 1;
+    // dir.shadowMaxZ = 50;
 
 
     const shadowGenerator = new ShadowGenerator(2048, dir);
@@ -81,4 +81,7 @@ function createLight(scene: Scene): void {
     // shadowGenerator.useBlurCloseExponentialShadowMap = true;
     // shadowGenerator.enableSoftTransparentShadow = true;
     shadowGenerator.darkness = 0.25;
+    // shadowGenerator.forceBackFacesOnly = true;
+    // shadowGenerator.bias = 0.01;
+
 }

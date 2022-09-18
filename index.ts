@@ -2,7 +2,7 @@
 import 'regenerator-runtime/runtime';
 import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
-import { AmmoJSPlugin, Mesh, ShadowGenerator, Vector3 } from 'babylonjs';
+import { AmmoJSPlugin, Color3, Mesh, MeshBuilder, ShadowGenerator, StandardMaterial, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
 import { makeBalls, makeCube, makeCubes, makeTorus } from './src/cube';
 import { canvas } from './src/domItems';
@@ -17,9 +17,21 @@ async function main(): Promise<void> {
     // makeCube();
     // makeTorus();
     // makeBalls();
-    // setTimeout(() => makeCubes(), 1000);
-    makeCubes();
+    setTimeout(() => makeCubes(), 1000);
+    // makeCubes();
     makeGround();
+
+    // const q = MeshBuilder.CreateBox("q", { size: 1 }, scene);
+    // q.position = new Vector3(0,5,0);
+    // const qm = new StandardMaterial("green", scene);
+    // qm.diffuseColor = Color3.Green();
+    // q.material = qm;
+    // const shadowGenerator = scene.getLightByName("spot")?.getShadowGenerator() as ShadowGenerator;
+    // if(shadowGenerator == null) {
+    //     throw "shadowGenerator not found";
+    // }
+    // shadowGenerator.addShadowCaster(q);
+
 
     // setInterval(() => makeBalls(), 5000);
     setInterval(() => makeCubes(), 5000);
@@ -33,24 +45,24 @@ async function main(): Promise<void> {
     //     }
     // });
 
-    canvas.onresize = function() {
-        console.log("canvas resize", canvas.width, canvas.height);
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        engine.resize(true);
-    };
-    window.onresize = function() {
-        console.log("window resize", window.innerWidth, window.innerHeight);
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        engine.resize(true);
-    };
+    // canvas.onresize = function() {
+    //     console.log("canvas resize", canvas.width, canvas.height);
+    //     canvas.width = window.innerWidth;
+    //     canvas.height = window.innerHeight;
+    //     engine.resize(true);
+    // };
+    // window.onresize = function() {
+    //     console.log("window resize", window.innerWidth, window.innerHeight);
+    //     canvas.width = window.innerWidth;
+    //     canvas.height = window.innerHeight;
+    //     engine.resize(true);
+    // };
 
     console.log(window.innerWidth, window.innerHeight);
     console.log(canvas.width, canvas.height);
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // canvas.width = window.innerWidth;
+    // canvas.height = window.innerHeight;
 
     // const notMoving:{[key: string]: number} = {};
 
@@ -88,6 +100,8 @@ async function main(): Promise<void> {
             // }
 
     });
+
+    // scene.debugLayer.show();
 
     engine.runRenderLoop(() => {
 
