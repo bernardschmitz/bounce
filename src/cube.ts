@@ -1,5 +1,5 @@
 
-import { Color3, Color4, Light, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
+import { Color3, Color4, FadeInOutBehavior, Light, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
 import { scene } from "./scene";
 
 export function makeCube(): Mesh {
@@ -102,7 +102,7 @@ export function makeCubes(): void {
     const balls: Mesh[] = [];
     for(var i=0; i<N; i++) {
         // const ball = MeshBuilder.CreateBox("box"+i, { size: 0.7 });
-        const ball = MeshBuilder.CreatePolyhedron("box"+i, { type: Math.trunc(Scalar.RandomRange(1,15)), size: 0.35 });
+        const ball = MeshBuilder.CreatePolyhedron("box"+i, { type: Math.trunc(Scalar.RandomRange(2,5)), size: 0.35 });
 
         ball.position.x = Scalar.RandomRange(-20, 20);
         ball.position.y = Scalar.RandomRange(25, 35);
@@ -118,28 +118,25 @@ export function makeCubes(): void {
         // ball.receiveShadows = true;
         balls.push(ball);
 
-    // const fade = new FadeInOutBehavior();
-    // fade.delay = 1000;
-    // fade.fadeInTime = 500;
-    // fade.attach(ground);
-    // fade.init();
-    // fade.fadeIn(true);
+        // const fade = new FadeInOutBehavior();
+        // fade.delay = 0;
+        // fade.fadeInTime = Math.trunc(Scalar.RandomRange(300, 500));
+        // fade.attach(ball);
+        // fade.init();
+        // fade.fadeIn(true);
 
-    // let doFadeIn = false;
-    // setInterval(() => {
-    //     if(doFadeIn) {
-    //         setTimeout(()=>{ 
-    //             ground.physicsImpostor?.dispose();
-    //         }, fade.delay+fade.fadeInTime/2);
-    //     }
-    //     else {
-    //         setTimeout(()=>{
-    //             ground.physicsImpostor = new PhysicsImpostor(ground, PhysicsImpostor.MeshImpostor, { mass: 0, restitution: 0.1, friction: 0.75 }, scene);
-    //         }, fade.delay+fade.fadeInTime/2);
-    //     }
-    //     fade.fadeIn(doFadeIn);
-    //     doFadeIn = !doFadeIn;
-    // }, 10000);
-
+        // setInterval(() => {
+            // const fade = new FadeInOutBehavior();
+            // fade.delay = 0;
+            // fade.fadeInTime = 1000;
+            // fade.attach(ball);
+            // fade.init();
+            // fade.fadeIn(true);
+            // fade.fadeIn(false);
+            setTimeout(()=>{ 
+                ball.physicsImpostor?.dispose();
+                ball.dispose();
+            }, Math.trunc(Scalar.RandomRange(10,30))*1000);
+        // }, Math.trunc(Scalar.RandomRange(10000, 20000)));
     }
 }
