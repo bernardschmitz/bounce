@@ -5,7 +5,7 @@ import { scene } from "./scene";
 
 export function makeCubes(): void {
 
-    const N = 500;
+    const N = 200;
 
     const shadowGenerator = scene.getLightByName("spot")?.getShadowGenerator() as ShadowGenerator;
 
@@ -45,7 +45,7 @@ export function makeCubes(): void {
         ball.position.x = Scalar.RandomRange(-20, 20);
         ball.position.y = Scalar.RandomRange(25, 35);
         ball.position.z = Scalar.RandomRange(-20, 20);
-        ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.MeshImpostor, { mass: 2, friction: 0.7, restitution: 0.1 }, scene);
+        ball.physicsImpostor = new PhysicsImpostor(ball, PhysicsImpostor.MeshImpostor, { mass: 2, friction: 0.7, restitution: 0.5 }, scene);
         shadowGenerator.addShadowCaster(ball);
 
         setInterval(()=>{ 

@@ -53,5 +53,5 @@ export function makeGround(): void {
         k.physicsImpostor = new PhysicsImpostor(k, PhysicsImpostor.BoxImpostor, { mass: 0 }, scene);
     }
 
-    ground_phys.physicsImpostor = new PhysicsImpostor(ground_phys, PhysicsImpostor.NoImpostor, { mass: 0, restitution: 0.1, friction: 0.75 }, scene);
+    ground_phys.physicsImpostor = new PhysicsImpostor(ground_phys, PhysicsImpostor.NoImpostor, { mass: 0, restitution: 0.5, friction: 0.75 }, scene);
 }
