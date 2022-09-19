@@ -28,6 +28,8 @@ export function makeGround(): void {
         const s = Scalar.RandomRange(0.5, 3);
         const g = MeshBuilder.CreateBox("block_phys"+i, { size: s }, scene);
         g.isVisible = false;
+        g.isPickable = false;
+        g.doNotSyncBoundingInfo = true;
         g.position = new Vector3(Math.trunc(Scalar.RandomRange(-20, 20)), s/2, Math.trunc(Scalar.RandomRange(-20, 20)));
         gmesh.push(g);
     }   
@@ -54,4 +56,6 @@ export function makeGround(): void {
     }
 
     ground_phys.physicsImpostor = new PhysicsImpostor(ground_phys, PhysicsImpostor.NoImpostor, { mass: 0, restitution: 0.5, friction: 0.75 }, scene);
+    ground_phys.isPickable = false;
+    ground_phys.doNotSyncBoundingInfo = true;
 }

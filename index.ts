@@ -15,8 +15,9 @@ async function main(): Promise<void> {
     
     scene.enablePhysics(new Vector3(0, -9.81/1.5, 0), physics);
 
-    setTimeout(() => makeCubes(), 1000);
+    // setTimeout(() => makeCubes(), 1000);
     makeGround();
+    makeCubes();
 
 
     canvas.onresize = function() {
@@ -39,6 +40,12 @@ async function main(): Promise<void> {
     canvas.height = window.innerHeight;
 
     // scene.debugLayer.show();
+
+    scene.pointerMovePredicate = () => false;
+    scene.pointerDownPredicate = () => false;
+    scene.pointerUpPredicate = () => false;
+
+
 
     engine.runRenderLoop(() => {
 

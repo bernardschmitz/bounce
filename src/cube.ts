@@ -42,6 +42,8 @@ export function makeCubes(): void {
 
     for(var i=0; i<N; i++) {
         const ball = ins[i%K].createInstance("box"+i);
+        ball.isPickable = false;
+        ball.doNotSyncBoundingInfo = true;
         ball.position.x = Scalar.RandomRange(-20, 20);
         ball.position.y = Scalar.RandomRange(25, 35);
         ball.position.z = Scalar.RandomRange(-20, 20);
@@ -54,7 +56,7 @@ export function makeCubes(): void {
             ball.position.x = Scalar.RandomRange(-20, 20);
             ball.position.y = Scalar.RandomRange(25, 35);
             ball.position.z = Scalar.RandomRange(-20, 20);
-        }, Math.trunc(Scalar.RandomRange(10,30))*1000);
+        }, Math.trunc(Scalar.RandomRange(10,20))*1000);
     }
 
     for(const k of ins) {
