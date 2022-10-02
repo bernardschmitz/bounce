@@ -1,5 +1,6 @@
 
 import { Color3, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
+import { makeExplosion } from "./particle";
 import { scene } from "./scene";
 
 
@@ -51,12 +52,18 @@ export function makeCubes(): void {
         shadowGenerator.addShadowCaster(ball);
 
         setInterval(()=>{ 
+
+            const exp = makeExplosion();
+            exp[0].position = ball.position.clone();
+            exp[1].start();
+            exp[2].start();
+
             ball.physicsImpostor?.setAngularVelocity(Vector3.Zero());
             ball.physicsImpostor?.setLinearVelocity(Vector3.Zero());
             ball.position.x = Scalar.RandomRange(-20, 20);
             ball.position.y = Scalar.RandomRange(25, 35);
             ball.position.z = Scalar.RandomRange(-20, 20);
-        }, Math.trunc(Scalar.RandomRange(10,20))*1000);
+        }, Math.trunc(Scalar.RandomRange(10000,30000)));
     }
 
     for(const k of ins) {

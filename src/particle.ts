@@ -1,9 +1,9 @@
 
-import { Color4, CreateBox, Mesh, ParticleSystem, PointerEventTypes, SphereParticleEmitter, Texture, Vector3 } from "babylonjs";
+import { Color4, CreateBox, Mesh, ParticleSystem, SphereParticleEmitter, Texture, Vector3 } from "babylonjs";
 import { scene } from "./scene";
 
 
-export function makeExplosion(): Mesh {
+export function makeExplosion(): [Mesh, ParticleSystem, ParticleSystem] {
 
     const exp = new ParticleSystem("flame", 2000, scene);
 
@@ -17,26 +17,28 @@ export function makeExplosion(): Mesh {
     exp.spriteCellChangeSpeed = 1
     exp.isAnimationSheetEnabled = true;
 
+    exp.minEmitPower = 2;
+    exp.maxEmitPower = 5;
 
-    exp.minEmitPower = 10;
-    exp.maxEmitPower = 16;
-
-    exp.minLifeTime = 1.25;
+    exp.minLifeTime = 1.0;
     exp.maxLifeTime = 2.0;
 
-    exp.emitRate = 2000;
+    exp.emitRate = 4000;
 
-    exp.addSizeGradient(0, 1);
-    exp.addSizeGradient(0.5, 5);
-    exp.addSizeGradient(0.8, 15);
-    exp.addSizeGradient(1.0, 20);
+    // exp.minSize = 0.5;
+    // exp.maxSize = 2;
+
+    exp.addSizeGradient(0, 0.5);
+    exp.addSizeGradient(0.5, 2.0);
+    exp.addSizeGradient(0.7, 3.0);
+    exp.addSizeGradient(1.0, 5.0);
 
     exp.addDragGradient(0, 0.1);
     exp.addDragGradient(0.8, 0.2);
-    exp.addDragGradient(1.0, 0.8);
+    exp.addDragGradient(1.0, 0.9);
 
-    exp.updateSpeed = 0.03;
-    exp.targetStopDuration = 0.5;
+    exp.updateSpeed = 0.05;
+    exp.targetStopDuration = 0.2;
 
     exp.blendMode = ParticleSystem.BLENDMODE_STANDARD;
 
@@ -45,14 +47,14 @@ export function makeExplosion(): Mesh {
     exp.minInitialRotation = 0.0;
     exp.maxInitialRotation = 5.0;
 
-    exp.color1 = Color4.FromHexString('#FFD5353C');
-    exp.color2 = Color4.FromHexString('#FF22003C');
-    exp.colorDead = Color4.FromHexString('#00000080');
+    // exp.color1 = Color4.FromHexString('#FFD5353C');
+    // exp.color2 = Color4.FromHexString('#FF22003C');
+    // exp.colorDead = Color4.FromHexString('#00000080');
 
     exp.addColorGradient(0.0, new Color4(1,1,1,1), new Color4(1,1,1,1));
     exp.addColorGradient(0.1, Color4.FromHexString('#FFE26080'), Color4.FromHexString('#E2C02580'));
-    exp.addColorGradient(0.4, Color4.FromHexString('#FF262680'), Color4.FromHexString('#CA2A2A80'));
-    exp.addColorGradient(0.7, Color4.FromHexString('#00000040'), Color4.FromHexString('#00000080'));
+    exp.addColorGradient(0.2, Color4.FromHexString('#FF262680'), Color4.FromHexString('#CA2A2A40'));
+    exp.addColorGradient(0.4, Color4.FromHexString('#00000040'), Color4.FromHexString('#00000080'));
     exp.addColorGradient(1.0, Color4.FromHexString('#00000000'), Color4.FromHexString('#00000000'));
 
     const pos = new Vector3(0, 5, 0);
@@ -70,16 +72,16 @@ export function makeExplosion(): Mesh {
     sparks.particleTexture = new Texture("textures/flare.png");
 
 
-    sparks.minEmitPower = 10;
-    sparks.maxEmitPower = 16;
+    sparks.minEmitPower = 1;
+    sparks.maxEmitPower = 10;
 
-    sparks.minLifeTime = 1.25;
-    sparks.maxLifeTime = 2.50;
+    sparks.minLifeTime = 0.5;
+    sparks.maxLifeTime = 1.50;
 
-    sparks.emitRate = 1000;
+    sparks.emitRate = 100000;
 
-    sparks.minSize = 0.4;
-    sparks.maxSize = 0.6;
+    sparks.minSize = 0.05;
+    sparks.maxSize = 0.1;
 
     sparks.minScaleX = 1.0;
     sparks.maxScaleX = 2.0;
@@ -91,10 +93,12 @@ export function makeExplosion(): Mesh {
     sparks.addDragGradient(0.8, 0.2);
     sparks.addDragGradient(1.0, 0.8);
 
-    sparks.updateSpeed = 0.06;
-    sparks.targetStopDuration = 0.75;
+    sparks.updateSpeed = 0.03;
+    sparks.targetStopDuration = 0.1;
 
     sparks.blendMode = ParticleSystem.BLENDMODE_ONEONE;
+
+    sparks.gravity = new Vector3(0, -4, 0);
 
     sparks.minAngularSpeed = 0.0;
     sparks.maxAngularSpeed = 0.0;
@@ -110,17 +114,17 @@ export function makeExplosion(): Mesh {
     // const sparksEmitter = sparks.createSphereEmitter(1.0);
     sparks.particleEmitterType = emitter;
 
-    scene.onPointerObservable.add((pointerInfo) => {
-        switch (pointerInfo.type) {
-            case PointerEventTypes.POINTERTAP:
-                // console.log(node.position);
-                // particleSystem.emitter = node.position;
-                // sparks.emitter = node.position;
-                exp.start();
-                sparks.start();
-            break;
-        }
-    });
+    // scene.onPointerObservable.add((pointerInfo) => {
+    //     switch (pointerInfo.type) {
+    //         case PointerEventTypes.POINTERTAP:
+    //             // console.log(node.position);
+    //             // particleSystem.emitter = node.position;
+    //             // sparks.emitter = node.position;
+    //             exp.start();
+    //             sparks.start();
+    //         break;
+    //     }
+    // });
 
     // scene.onBeforeRenderObservable.add(() => {
     //     exp.emitter = node.position;
@@ -128,12 +132,12 @@ export function makeExplosion(): Mesh {
     // });
 
     const bang = CreateBox("bang", { size: 0.1 });
-    bang.isVisible = true;
+    bang.isVisible = false;
 
     sparks.emitter = bang;
     exp.emitter = bang;
 
     bang.position = pos;
 
-    return bang;
+    return [ bang, exp, sparks ];
 }

@@ -2,7 +2,7 @@
 import 'regenerator-runtime/runtime';
 import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
-import { AmmoJSPlugin, Vector3 } from 'babylonjs';
+import { AmmoJSPlugin, PointerEventTypes, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
 import { makeCubes } from './src/cube';
 import { canvas } from './src/domItems';
@@ -20,14 +20,26 @@ async function main(): Promise<void> {
     makeGround();
     makeCubes();
     
-    const e1 = makeExplosion();
-    const e2 = makeExplosion();
-    const e3 = makeExplosion();
+    // const e1 = makeExplosion();
+    // const e2 = makeExplosion();
+    // const e3 = makeExplosion();
 
-    e1.position = new Vector3(5, 5, 0);
-    e2.position = new Vector3(0, 5, 0);
-    e3.position = new Vector3(-5, 5, 0);
+    // e1[0].position = new Vector3(5, 5, 0);
+    // e2[0].position = new Vector3(0, 5, 0);
+    // e3[0].position = new Vector3(-5, 5, 0);
 
+    // scene.onPointerObservable.add((pointerInfo) => {
+    //     switch (pointerInfo.type) {
+    //         case PointerEventTypes.POINTERTAP:
+    //             e1[1].start();
+    //             e1[2].start();
+    //             e2[1].start();
+    //             e2[2].start();
+    //             e3[1].start();
+    //             e3[2].start();
+    //         break;
+    //     }
+    // });
 
     canvas.onresize = function() {
         console.log("canvas resize", canvas.width, canvas.height);
