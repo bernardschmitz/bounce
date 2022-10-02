@@ -1,6 +1,6 @@
 
 import { Color3, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
-import { makeExplosion } from "./particle";
+import { explosionManager, ExplosionManager } from "./particle";
 import { scene } from "./scene";
 
 
@@ -53,10 +53,7 @@ export function makeCubes(): void {
 
         setInterval(()=>{ 
 
-            const exp = makeExplosion();
-            exp[0].position = ball.position.clone();
-            exp[1].start();
-            exp[2].start();
+            explosionManager.addExplosion(ball.position.clone());
 
             ball.physicsImpostor?.setAngularVelocity(Vector3.Zero());
             ball.physicsImpostor?.setLinearVelocity(Vector3.Zero());

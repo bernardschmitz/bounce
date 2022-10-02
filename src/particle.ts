@@ -3,9 +3,78 @@ import { Color4, CreateBox, Mesh, ParticleSystem, SphereParticleEmitter, Texture
 import { scene } from "./scene";
 
 
-export function makeExplosion(): [Mesh, ParticleSystem, ParticleSystem] {
+class ExplosionManager {
 
-    const exp = new ParticleSystem("flame", 2000, scene);
+    private explosions:Explosion[] = [];
+
+    constructor() {
+        // do nothing
+    }
+
+    public addExplosion(position:Vector3):Explosion {
+        
+        const exp = new Explosion(position);
+        exp.start();
+        
+        const i = this.explosions.findIndex((v) => !v.isAlive());
+        if(i >= 0) {
+            console.log(i);
+            this.explosions[i].dispose();
+            this.explosions[i] = exp;
+        }
+        else {
+            this.explosions.push(exp);
+        }
+
+        // console.log(this.explosions);
+
+        return exp;
+    }
+
+    // public removeExplosion() {
+    //     for(let k of this.explosions) {
+    //         if(!k.isAlive()) {
+    //             k.dispose();
+    //         }
+    //     }
+    // }
+};
+
+class Explosion {
+
+    private mesh;
+    private flame;
+    private sparks;
+
+    constructor(position:Vector3) {
+        [this.mesh, this.flame, this.sparks] = makeExplosion();
+        this.mesh.position = position; 
+    }
+
+    public start():void {
+        this.flame.start();
+        this.sparks.start();
+    }
+
+    public isAlive():boolean {
+        return this.flame.isAlive() || this.sparks.isAlive()
+    }
+
+    public dispose():void {
+        this.flame.dispose();
+        this.sparks.dispose();
+        this.mesh.dispose();
+    }
+}
+
+
+export const explosionManager = new ExplosionManager();
+
+
+
+function makeExplosion(): [Mesh, ParticleSystem, ParticleSystem] {
+
+    const exp = new ParticleSystem("flame", 1000, scene);
 
     //Texture of each particle
     exp.particleTexture = new Texture("textures/CloudSpriteSheet.png");
