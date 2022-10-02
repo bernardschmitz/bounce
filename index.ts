@@ -6,6 +6,7 @@ import { AmmoJSPlugin, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
 import { makeCubes } from './src/cube';
 import { canvas } from './src/domItems';
+import { makeExplosion } from './src/particle';
 
 
 async function main(): Promise<void> {
@@ -18,6 +19,14 @@ async function main(): Promise<void> {
     // setTimeout(() => makeCubes(), 1000);
     makeGround();
     makeCubes();
+    
+    const e1 = makeExplosion();
+    const e2 = makeExplosion();
+    const e3 = makeExplosion();
+
+    e1.position = new Vector3(5, 5, 0);
+    e2.position = new Vector3(0, 5, 0);
+    e3.position = new Vector3(-5, 5, 0);
 
 
     canvas.onresize = function() {
