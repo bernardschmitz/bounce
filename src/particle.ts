@@ -5,7 +5,7 @@ import { scene } from "./scene";
 
 export function makeExplosion(): [Mesh, ParticleSystem, ParticleSystem] {
 
-    const exp = new ParticleSystem("flame", 2000, scene);
+    const exp = new ParticleSystem("flame", 500, scene);
 
     //Texture of each particle
     exp.particleTexture = new Texture("textures/CloudSpriteSheet.png");
