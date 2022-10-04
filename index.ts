@@ -2,11 +2,10 @@
 import 'regenerator-runtime/runtime';
 import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
-import { AmmoJSPlugin, PointerEventTypes, Vector3 } from 'babylonjs';
+import { AmmoJSPlugin, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
 import { makeCubes } from './src/cube';
 import { canvas } from './src/domItems';
-import { makeExplosion } from './src/particle';
 
 
 async function main(): Promise<void> {

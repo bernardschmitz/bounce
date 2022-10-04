@@ -18,7 +18,7 @@ class ExplosionManager {
         
         const i = this.explosions.findIndex((v) => !v.isAlive());
         if(i >= 0) {
-            console.log(i);
+            // console.log(i, this.explosions.length);
             this.explosions[i].dispose();
             this.explosions[i] = exp;
         }
@@ -74,8 +74,7 @@ export const explosionManager = new ExplosionManager();
 
 function makeExplosion(): [Mesh, ParticleSystem, ParticleSystem] {
 
-    const exp = new ParticleSystem("flame", 1000, scene);
-
+    const exp = new ParticleSystem("flame", 250, scene);
     //Texture of each particle
     exp.particleTexture = new Texture("textures/CloudSpriteSheet.png");
     
@@ -135,7 +134,7 @@ function makeExplosion(): [Mesh, ParticleSystem, ParticleSystem] {
     exp.particleEmitterType = emitter;
 
 
-    const sparks = new ParticleSystem("sparks", 150, scene);
+    const sparks = new ParticleSystem("sparks", 100, scene);
 
     //Texture of each particle
     sparks.particleTexture = new Texture("textures/flare.png");
