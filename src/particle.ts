@@ -1,5 +1,5 @@
 
-import { Color4, CreateBox, Mesh, ParticleSystem, SphereParticleEmitter, Texture, Vector3 } from "babylonjs";
+import { Color4, CreateBox, Mesh, ParticleSystem, SphereParticleEmitter, Texture, Vector3 } from "@babylonjs/core";
 import { scene } from "./scene";
 
 

@@ -1,5 +1,5 @@
 
-import { Color3, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "babylonjs";
+import { Color3, Material, Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, StandardMaterial, Vector3 } from "@babylonjs/core";
 import { explosionManager } from "./particle";
 import { scene } from "./scene";
 

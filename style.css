@@ -17,16 +17,3 @@ body {
     display: block;
 }
 
-#fps {
-    position: absolute;
-    background-color: #444;
-    border: 2px solid salmon;
-    text-align: center;
-    font-size: 15px;
-    font-family: sans-serif;
-    color: #ddd;
-    top: 15px;
-    right: 10px;
-    width: 60px;
-    height: 20px;
-}

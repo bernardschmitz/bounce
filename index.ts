@@ -2,10 +2,11 @@
 import 'regenerator-runtime/runtime';
 import { scene, engine } from './src/scene';
 import Ammo from 'ammojs-typed';
-import { AmmoJSPlugin, Vector3 } from 'babylonjs';
 import { makeGround } from './src/ground';
 import { makeCubes } from './src/cube';
 import { canvas } from './src/domItems';
+import { AmmoJSPlugin, Vector3 } from '@babylonjs/core';
+import { AdvancedDynamicTexture, Control, Rectangle, TextBlock } from '@babylonjs/gui';
 
 
 async function main(): Promise<void> {
@@ -59,21 +60,37 @@ async function main(): Promise<void> {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // scene.debugLayer.show();
-
     scene.pointerMovePredicate = () => false;
     scene.pointerDownPredicate = () => false;
     scene.pointerUpPredicate = () => false;
 
+    const advancedTexture = AdvancedDynamicTexture.CreateFullscreenUI("UI", true, scene);
 
+    const fps_box = new Rectangle();
+    fps_box.width = "60px";
+    fps_box.height = "30px";
+    fps_box.cornerRadius = 20;
+    fps_box.color = "salmon";
+    fps_box.thickness = 2;
+    fps_box.background = "#444";
+    fps_box.horizontalAlignment = Control.HORIZONTAL_ALIGNMENT_RIGHT;
+    fps_box.verticalAlignment = Control.VERTICAL_ALIGNMENT_TOP;
+    fps_box.top = "15px";
+    fps_box.left = "-10px";
+    advancedTexture.addControl(fps_box);    
+
+    const fps_text = new TextBlock();
+    fps_text.text = "Hello world";
+    fps_text.color = "white";
+    fps_text.fontSize = 15;
+  
+    fps_box.addControl(fps_text);  
+
+    // scene.debugLayer.show();
 
     engine.runRenderLoop(() => {
 
-        const divFps = document.getElementById("fps");
-        if(divFps != null) {
-            divFps.innerHTML = engine.getFps().toFixed() + " fps";
-        }
-
+        fps_text.text = engine.getFps().toFixed() + " fps";
         scene.render()
     });
 }

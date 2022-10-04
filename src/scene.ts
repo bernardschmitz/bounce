@@ -1,5 +1,5 @@
 
-import { Animation, ArcRotateCamera, Color3, Color4,  CubicEase, EasingFunction, Engine, HemisphericLight, Scene, ShadowGenerator, SpotLight, Vector3 } from 'babylonjs';
+import { Animation, ArcRotateCamera, Color3, Color4,  CubicEase, EasingFunction, Engine, HemisphericLight, Scene, ShadowGenerator, SpotLight, Vector3 } from '@babylonjs/core';
 import { canvas } from './domItems';
 
 export const engine = new Engine(canvas, true);

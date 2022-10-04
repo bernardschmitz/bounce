@@ -1,5 +1,5 @@
 
-import { Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, Vector3 } from "babylonjs";
+import { Mesh, MeshBuilder, PhysicsImpostor, Scalar, ShadowGenerator, Vector3 } from "@babylonjs/core";
 import { scene } from "./scene";
 
 export function makeGround(): void {
