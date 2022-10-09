@@ -1,10 +1,10 @@
 
 import 'regenerator-runtime/runtime';
-import { scene, engine } from './src/scene';
+import { scene, engine } from './scene';
 import Ammo from 'ammojs-typed';
-import { makeGround } from './src/ground';
-import { makeCubes } from './src/cube';
-import { canvas } from './src/domItems';
+import { makeGround } from './ground';
+import { makeCubes } from './cube';
+import { canvas } from './domItems';
 import { AmmoJSPlugin, Vector3 } from '@babylonjs/core';
 import { AdvancedDynamicTexture, Control, Rectangle, TextBlock } from '@babylonjs/gui';
 
